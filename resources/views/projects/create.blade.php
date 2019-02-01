@@ -1,30 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
-</head>
-<body>
-    <h1>Create a new Project</h1>
+@extends('layout')
+
+@section('content')
+
+    <h1 class="title">Create a new Project</h1>
 
     <form method="POST" action="/projects">
         {{ csrf_field() }}
 
-        <div>
-            <input type="text" name="title" placeholder="Project title">
+        <div class="field">
+            <label class="label" for="title">Project Title</label>
+            
+            <div class="control">
+                <input type="text" class="input {{ $errors->has('title') ? 'is-danger' : '' }}" name="title" value="{{ old('title') }}" required>
+            </div>
         </div>
 
-        <div>
-            <textarea name="description" placeholder="Project description"></textarea>
+        <div class="field">
+            <label class="label" for="description">Project Description</label>
+            
+            <div class="control">
+                <textarea class="textarea {{ $errors->has('description') ? 'is-danger' : '' }}" value="{{ old('description') }}" name="description" required></textarea>
+            </div>
         </div>
 
-        <div>
-            <button type="submit">Create Project</button>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-link">Create Project</button>
+            </div>
         </div>
+
+        @if ($errors->any())
+            <div class="notification is-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </form>
-</body>
-</html>
+
+@endsection

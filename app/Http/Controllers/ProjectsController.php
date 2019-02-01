@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 
-class ProjectsController extends Controller
-{
+class ProjectsController extends Controller {
     public function index() {
         $projects = Project::all();
 
@@ -37,7 +36,12 @@ class ProjectsController extends Controller
     }
 
     public function store() {
-        Project::create(request(['title', 'description']));
+        $attributes = request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3']
+        ]);
+
+        Project::create($attributes);
 
         return redirect('/projects');
     }
