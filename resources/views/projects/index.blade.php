@@ -12,4 +12,9 @@
             </li>
         @endforeach
     </ul>
+
+    <br>
+    <p>
+        <a href="/projects/create">Create Project</a>
+    </p>
 @endsection
